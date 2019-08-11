@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes articles{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{%  for article in articles %}
+    <ul>
+<li>Name :  {{ article.title}} }}</li>
+    <li>createdAt :  {{ article.createdAt|date}} }}</li>
+    <li>imageUrl :  {{ article.imageUrl}} }}</li>
+    <li>content :  {{ article.content| nl2br}} }}</li>
+    </ul>
+
+{% endfor %}
+{% endblock %}

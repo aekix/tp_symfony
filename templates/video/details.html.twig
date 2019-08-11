@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+    Identifiant : {{ video.id }}
+    <br>
+    Created At : {{ video.createdAt.format('Y-m-d H:i:s') }}
+    <br>
+    Description : {{ video.description }}
+    <br>
+    Title : {{ video.title }}
+    <br>
+    <a href="{{ path('main') }}">Retour</a>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+    Identifiant : {{ user.id }}
+    <br>
+    Firstname : {{ user.firstname }}
+    <br>
+    Lastname : {{ user.lastname }}
+    <br>
+    Email : {{ user.email }}
+    <br>
+    BirthDate : {{ user.birthday }}
+    <a href="{{ path('main') }}">Retour</a>
+
+{% endblock %}

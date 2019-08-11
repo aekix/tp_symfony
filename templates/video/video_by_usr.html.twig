@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+
+    <ul>
+        {% for video in videos %}
+            <li>
+                {% set url = video.url %}
+                {% set youtubeKey = url|split('=') %}
+                {% set youtubeKey = youtubeKey[1] %}
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/". {{ youtubeKey }}  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <a href="{{ path('u_details', {'id':video.user.id}) }}">{{ video.user.firstname }} {{ video.user.lastname }}</a>
+                <a href="{{ path('v_details', {'id':video.id}) }}">Détails</a>
+                <a href="{{ path('v_categorie', {'id':video.category.id}) }}">{{ video.category.title }}</a>
+                <a href="{{ path('video_edit', {'id':video.user.id}) }}">Edit</a>
+                <a href="{{ path('video_remove', {'id':video.user.id}) }}">Remove</a>
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

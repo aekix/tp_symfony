@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') == false %}<a href="{{ path('login') }}">login</a> <br> <a href="{{ path('register') }}">register</a> {% else %}
+        Bonjour {{ app.user.username }}
+        <br><br>
+        <a href="{{ path('edit', {'id':app.user.id}) }}">Mes informations</a>
+        <br>
+        <a href="{{ path('upload') }}">Upload une vidéo</a>
+        <br>
+        <a href="{{ path('list_vod_usr', {'id':app.user.id}) }}">Mes vidéos</a>
+    {% endif %}
+
+    <ul>
+    {% for video in videos %}
+        <li>
+            {% set url = video.url %}
+            {% set youtubeKey = url|split('=') %}
+            {% set youtubeKey = youtubeKey[1] %}
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/". {{ youtubeKey }}  frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="{{ path('u_details', {'id':video.user.id}) }}">{{ video.user.firstname }} {{ video.user.lastname }}</a>
+            <a href="{{ path('v_details', {'id':video.id}) }}">Détails</a>
+            <a href="{{ path('v_categorie', {'id':video.category.id}) }}">{{ video.category.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
