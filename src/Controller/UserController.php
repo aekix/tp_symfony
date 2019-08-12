@@ -60,7 +60,7 @@ class UserController extends AbstractController
      */
     public function remove(User $user, EntityManagerInterface $entityManager)
     {
-        $articles = $user->getArticles();
+        $articles = $user->getVideos();
         foreach ($articles as $article) {
             $article->setUser(null);
         }
@@ -71,13 +71,27 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/user/{id}", name="u_details")
+     * @Route("/userDetails/{id}", name="u_details")
      *
      */
     public function detailsUser(User $user)
     {
         return $this->render('user/details.html.twig', [
             'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/listUser", name="list_users")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listUser(Request $request)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $repository = $entityManager->getRepository(User::class)->findAll();
+        return $this->render('admin/list_user.html.twig', [
+            'users' => $repository,
         ]);
     }
 }

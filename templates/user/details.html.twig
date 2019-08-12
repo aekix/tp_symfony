@@ -11,7 +11,8 @@
     <br>
     Email : {{ user.email }}
     <br>
-    BirthDate : {{ user.birthday }}
+    BirthDate : {{ user.birthday.format('Y-m-d H:i:s') }}
+    <br>
     <a href="{{ path('main') }}">Retour</a>
 
 {% endblock %}

@@ -20,13 +20,12 @@ class VideoController extends AbstractController
     public function index()
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $videos = $entityManager->getRepository(Video::class)->findAll();
-        $categories = $entityManager->getRepository(Category::class)->findAll();
-        $auteurs = $entityManager->getRepository(User::class)->findAll();
-        return $this->render('video/index.html.twig', [
+        $videos = $entityManager->getRepository(Video::class);
+
+        $videos = $videos->findBy(
+            ['published' =>     true]
+        );        return $this->render('video/index.html.twig', [
             'videos' => $videos,
-            'categories' => $categories,
-            'auteurs' => $auteurs
         ]);
     }
 
@@ -88,7 +87,7 @@ class VideoController extends AbstractController
     }
 
     /**
-     * @Route("/editvideo/{id}", name="video_edit")
+     * @Route("/video/edit/{id}", name="video_edit")
      *
      */
     public function edit(Video $video, Request $request, EntityManagerInterface $entityManager)
@@ -98,7 +97,7 @@ class VideoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($video);
             $entityManager->flush();
-            return $this->redirectToRoute('main');
+            return $this->redirectToRoute('list_vod_usr', ['id' => $video->getUser()->getId()] );
         }
         $repository = $entityManager->getRepository(User::class)->findAll();
         return $this->render('user/index.html.twig', [
@@ -107,14 +106,20 @@ class VideoController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/video/remove/{id}", name="video_remove")
+     * @param Video $video
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function remove(Video $video, EntityManagerInterface $entityManager)
     {
         $entityManager->remove($video);
         $entityManager->flush();
         $this->addFlash('notice', 'Your changes were saved!');
-        return $this->redirectToRoute('main');
+        return $this->redirectToRoute('list_vod_usr', ['id' => $video->getUser()->getId()] );
     }
+
+
 }
