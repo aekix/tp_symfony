@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+    {% for user in users %}
+        Identifiant : {{ user.id }}
+        <br>
+        Firstname : {{ user.firstname }}
+        <br>
+        Lastname : {{ user.lastname }}
+        <br>
+        Email : {{ user.email }}
+        <br>
+        BirthDate : {{ user.birthday.format('Y-m-d H:i:s') }}
+        <br>
+        <a href="{{ path('edit', {'id':user.id}) }}">Edit</a>
+        <a href="{{ path('user_remove', {'id':user.id}) }}">Remove</a>
+        <p>--------------------------------------------------</p>
+        <br>
+    {% endfor %}
+    <a href="{{ path('main') }}">Retour</a>
+
+{% endblock %}

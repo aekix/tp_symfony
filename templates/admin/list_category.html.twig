@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VideoController!{% endblock %}
+
+{% block body %}
+    {% for categ in category %}
+        Title : {{ categ.title }}
+        <br>
+        Description : {{ categ.description }}
+        <br>
+        <a href="{{ path('categ_edit', {'id':categ.id}) }}">Edit</a>
+        <a href="{{ path('categ_remove', {'id':categ.id}) }}">Remove</a>
+        <p>--------------------------------------------------</p>
+        <br>
+    {% endfor %}
+    <a href="{{ path('main') }}">Retour</a>
+
+{% endblock %}
